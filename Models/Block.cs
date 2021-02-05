@@ -1,46 +1,32 @@
-using System.Linq.Expressions;
-using System.ComponentModel.DataAnnotations;
-using System;
-using System.IO;
-using System.Security.Cryptography;
-using System.Xml.Serialization;
-using bc.PowFunctions;
-using System.Threading.Tasks;
-
 namespace bc.Models
 {
     public class Block
     {
         private readonly string _prevBlockHash;
-        private readonly Data _data;
-        private string _hashBlock;
+        private string _blockHash;
+        private Data _data;
 
-        public Block(string prevBlockHash, Data data)
+        public Block(Data data, string blockHash)
         {
             _data = data;
-            _prevBlockHash = prevBlockHash;
+            _blockHash = blockHash;
+            _prevBlockHash = data.PreviousBlockHash;
         }
 
-        public string PrevBlockHash { get { return _prevBlockHash; } }
+        public string PrevBlockHash { get { return _prevBlockHash; } private set { PrevBlockHash = _prevBlockHash ;} }
 
-        public string BlockHash { get { return _hashBlock; } }
+        public string BlockHash { get { return _blockHash; } private set { BlockHash = _blockHash; } }
 
-        public Data Data { get { return _data; } }
-
-        public async Task MineHashBlock()
-        {
-            var miner = new Miner();
-
-            _hashBlock = await miner.MineBlock(8, _data);
+        public Data Data 
+        { 
+            get 
+            {
+                return _data; 
+            } 
+            private set 
+            { 
+                Data = _data; 
+            }
         }
-    }
-
-    public class Data
-    {
-        public DateTime TransactionDateTime { get; set; }
-        public string SenderID { get; set; }
-        public string RecipientID { get; set; }
-        public decimal TransactionAmount { get; set; }
-        public string PreviousBlockHash { get; set; }
     }
 }

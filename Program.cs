@@ -1,33 +1,53 @@
-﻿using System;
-using System.Collections.Generic;
-using bc.Models;
-using System.Linq;
-using bc.ExtensionMethods;
+﻿using System.IO;
+using System;
+using Microsoft.Extensions.DependencyInjection;
+using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
+using bc.BlockManagers;
+using bc.Miners;
+using bc.Retievers;
+using Microsoft.Extensions.Configuration;
+using bc.HashingMethods;
 
 namespace bc
 {
     internal class Program
     {
-        private static async System.Threading.Tasks.Task Main(string[] args)
+        private static async Task Main(string[] args)
         {
-            var data = new Data
-            {
-                TransactionDateTime = DateTime.UtcNow,
-                SenderID = "sender0",
-                RecipientID = "recipient0",
-                TransactionAmount = 1.00020002030M,
-                PreviousBlockHash = "0"
-            };
+            var services = ConfigureServices();
 
-            var genesisBlock = new Block("0", data);
+            var serviceProvider = services.BuildServiceProvider();
 
-            await genesisBlock.MineHashBlock();
+            await serviceProvider.GetService<App>().RunAsync();
+        }
 
-            var blockChain = new List<Block>();
+        private static IServiceCollection ConfigureServices()
+        {
+            IServiceCollection services = new ServiceCollection();
 
-            blockChain.Add(genesisBlock);
+            var config = LoadConfiguration();
+            services.AddSingleton(config)
+                    .AddLogging(config => config.AddConsole().SetMinimumLevel(LogLevel.Debug))
+                    .AddScoped<IManageBlockChain, BlockChainManager>()
+                    .AddScoped<IManageNewBlocks, NewBlockManager>()
+                    .AddScoped<IMineBlocks, BlockMiner>()
+                    .AddScoped<IRetrieveData, DataRetriever>()
+                    .AddScoped<IRetrieveBlockChain, BlockChainRetriever>()   
+                    .AddSingleton<IHash, HashSha256>();      
 
-            System.Console.WriteLine($"{blockChain[0].BlockHash}");
+            services.AddTransient<App>();
+
+            return services;
+        }                    
+                                    
+        public static IConfiguration LoadConfiguration()
+        {
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+
+            return builder.Build();
         }
     }
 }
