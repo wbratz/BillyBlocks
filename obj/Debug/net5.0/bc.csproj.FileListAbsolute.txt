@@ -1,0 +1,15 @@
+/Users/bbratz/bs/bc/bin/Debug/net5.0/bc.deps.json
+/Users/bbratz/bs/bc/bin/Debug/net5.0/bc.runtimeconfig.json
+/Users/bbratz/bs/bc/bin/Debug/net5.0/bc.runtimeconfig.dev.json
+/Users/bbratz/bs/bc/bin/Debug/net5.0/bc.dll
+/Users/bbratz/bs/bc/bin/Debug/net5.0/ref/bc.dll
+/Users/bbratz/bs/bc/bin/Debug/net5.0/bc.pdb
+/Users/bbratz/bs/bc/obj/Debug/net5.0/bc.csprojAssemblyReference.cache
+/Users/bbratz/bs/bc/obj/Debug/net5.0/bc.GeneratedMSBuildEditorConfig.editorconfig
+/Users/bbratz/bs/bc/obj/Debug/net5.0/bc.AssemblyInfoInputs.cache
+/Users/bbratz/bs/bc/obj/Debug/net5.0/bc.AssemblyInfo.cs
+/Users/bbratz/bs/bc/obj/Debug/net5.0/bc.csproj.CoreCompileInputs.cache
+/Users/bbratz/bs/bc/obj/Debug/net5.0/bc.dll
+/Users/bbratz/bs/bc/obj/Debug/net5.0/ref/bc.dll
+/Users/bbratz/bs/bc/obj/Debug/net5.0/bc.pdb
+/Users/bbratz/bs/bc/obj/Debug/net5.0/bc.genruntimeconfig.cache
