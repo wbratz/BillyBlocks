@@ -6,11 +6,10 @@ using bc.ExtensionMethods;
 
 namespace bc
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static async System.Threading.Tasks.Task Main(string[] args)
         {
-
             var data = new Data
             {
                 TransactionDateTime = DateTime.UtcNow,
@@ -22,10 +21,12 @@ namespace bc
 
             var genesisBlock = new Block("0", data);
 
+            await genesisBlock.MineHashBlock();
+
             var blockChain = new List<Block>();
 
             blockChain.Add(genesisBlock);
-            
+
             System.Console.WriteLine($"{blockChain[0].BlockHash}");
         }
     }

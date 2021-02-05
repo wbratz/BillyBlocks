@@ -5,58 +5,33 @@ using System.IO;
 using System.Security.Cryptography;
 using System.Xml.Serialization;
 using bc.PowFunctions;
+using System.Threading.Tasks;
 
 namespace bc.Models
 {
     public class Block
     {
         private readonly string _prevBlockHash;
-        private readonly Data _data; 
+        private readonly Data _data;
+        private string _hashBlock;
 
-        private string _blockHash;
         public Block(string prevBlockHash, Data data)
         {
             _data = data;
             _prevBlockHash = prevBlockHash;
-            _blockHash = GetBlockHash();   
         }
 
-        public string PrevBlockHash { get {return _prevBlockHash;} }
-        public string BlockHash 
-        { 
-            get 
-            { 
-                return _blockHash;
-            }
+        public string PrevBlockHash { get { return _prevBlockHash; } }
 
-            set 
-            {
-                _blockHash = GetBlockHash();
-            } 
-        }
+        public string BlockHash { get { return _hashBlock; } }
+
         public Data Data { get { return _data; } }
 
-        private string GetBlockHash()
+        public async Task MineHashBlock()
         {
-            var sha = SHA256.Create();
-            var hash = sha.ComputeHash(Data.ToByteArray());
-            
             var miner = new Miner();
-            miner.MineBlock(1, ConvertToString(hash));
 
-            return ConvertToString(hash);
-        }
-
-        private string ConvertToString(byte[] array)
-        {
-            var result = "";
-
-            for (int i = 0; i < array.Length; i++)
-            {
-                result+=$"{array[i]:X2}";
-            }
-
-            return result;
+            _hashBlock = await miner.MineBlock(8, _data);
         }
     }
 
@@ -67,18 +42,5 @@ namespace bc.Models
         public string RecipientID { get; set; }
         public decimal TransactionAmount { get; set; }
         public string PreviousBlockHash { get; set; }
-    }
-
-    internal static class DataExtensions
-    {
-        internal static byte[] ToByteArray(this Data data)
-        {
-            var xs = new XmlSerializer(typeof(Data));
-            using (var ms = new MemoryStream())
-            {
-                xs.Serialize(ms, data);
-                return ms.ToArray();
-            }
-        }
     }
 }

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "GQ+NYeMH6nITlBs5oaACtvBUN5qncCTIQPbXeSJM42hKvjbKtkluI/gp64qfXCGnteiMQ0WQBjgCmBfTwDFsQw==",
+  "dgSpecHash": "kHYne1yHZBa1EaweoiicdjNsQtASgHgWefABkqVGR4yPXh7ezu4WF549uiFobd6S4+c9F4aWMusq4qBdC3mmgg==",
   "success": true,
-  "projectFilePath": "/Users/bbratz/bs/bc/bc.csproj",
+  "projectFilePath": "E:\\repos\\BillyBlocks\\bc.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

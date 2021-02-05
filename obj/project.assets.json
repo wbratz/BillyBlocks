@@ -8,28 +8,33 @@
     "net5.0": []
   },
   "packageFolders": {
-    "/Users/bbratz/.nuget/packages/": {},
-    "/usr/local/share/dotnet/sdk/NuGetFallbackFolder": {}
+    "C:\\Users\\wbrat\\.nuget\\packages\\": {},
+    "C:\\Microsoft\\Xamarin\\NuGet\\": {},
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/bbratz/bs/bc/bc.csproj",
+      "projectUniqueName": "E:\\repos\\BillyBlocks\\bc.csproj",
       "projectName": "bc",
-      "projectPath": "/Users/bbratz/bs/bc/bc.csproj",
-      "packagesPath": "/Users/bbratz/.nuget/packages/",
-      "outputPath": "/Users/bbratz/bs/bc/obj/",
+      "projectPath": "E:\\repos\\BillyBlocks\\bc.csproj",
+      "packagesPath": "C:\\Users\\wbrat\\.nuget\\packages\\",
+      "outputPath": "E:\\repos\\BillyBlocks\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "/usr/local/share/dotnet/sdk/NuGetFallbackFolder"
+        "C:\\Microsoft\\Xamarin\\NuGet\\",
+        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "/Users/bbratz/.nuget/NuGet/NuGet.Config"
+        "C:\\Users\\wbrat\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net5.0"
       ],
       "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -62,7 +67,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/5.0.101/RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.102\\RuntimeIdentifierGraph.json"
       }
     }
   }
