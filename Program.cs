@@ -29,18 +29,18 @@ namespace bc
             var config = LoadConfiguration();
             services.AddSingleton(config)
                     .AddLogging(config => config.AddConsole().SetMinimumLevel(LogLevel.Debug))
-                    .AddScoped<IManageBlockChain, BlockChainManager>()
-                    .AddScoped<IManageNewBlocks, NewBlockManager>()
-                    .AddScoped<IMineBlocks, BlockMiner>()
-                    .AddScoped<IRetrieveData, DataRetriever>()
-                    .AddScoped<IRetrieveBlockChain, BlockChainRetriever>()   
-                    .AddSingleton<IHash, HashSha256>();      
+                    .AddSingleton<IManageBlockChain, BlockChainManager>()
+                    .AddSingleton<IGenerateNewBlocks, NewBlockGenerator>()
+                    .AddSingleton<IMineBlocks, BlockMiner>()
+                    .AddTransient<IRetrieveData, DataRetriever>()
+                    .AddSingleton<IRetrieveBlockChain, BlockChainRetriever>()
+                    .AddSingleton<IHash, HashSha256>();
 
             services.AddTransient<App>();
 
             return services;
-        }                    
-                                    
+        }
+
         public static IConfiguration LoadConfiguration()
         {
             var builder = new ConfigurationBuilder()

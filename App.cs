@@ -9,58 +9,62 @@ namespace bc
     {
         private readonly IConfiguration _config;
         private readonly IManageBlockChain _blockChainManager;
+
         public App(IConfiguration config, IManageBlockChain blockManager)
         {
             _config = config;
             _blockChainManager = blockManager;
-        }        
+        }
 
         public async Task RunAsync()
         {
             var logDirectory = _config.GetValue<string>("Runtime:LogOutputDirectory");
 
-
             bool interactionComplete = false;
             bool stopPressed = false;
-            int miningOption;
             var threads = 1;
-            
-            System.Console.WriteLine($"Welcome to FC Coin");
-            System.Console.WriteLine($"Enter ID: ");
 
-            while(!interactionComplete)
+            Console.WriteLine($"Welcome to FC Coin");
+            Console.WriteLine($"Enter ID: ");
+
+            while (!interactionComplete)
             {
-                System.Console.WriteLine($"Choose Mining Option: ");
-                System.Console.WriteLine($"1 - Multithreaded, 2 - Single Thread");
+                //Console.WriteLine($"Choose Mining Option: ");
+                //Console.WriteLine($"1 - Multithreaded, 2 - Single Thread");
 
-                int.TryParse(Console.ReadLine(), out miningOption);
+                //int.TryParse(Console.ReadLine(), out int miningOption);
 
-                if(miningOption < 1 || miningOption > 2)
+                var miningOption = 2;
+
+                if (miningOption < 1 || miningOption > 2)
                 {
-                    System.Console.WriteLine("Invalid Option, try again.");
+                    Console.WriteLine("Invalid Option, try again.");
                     continue;
                 }
-                else if (miningOption == 2)
+                else if (miningOption == 1)
                 {
-                    System.Console.WriteLine("Threads to use: ");
+                    Console.Write("Threads to use: ");
                     int.TryParse(Console.ReadLine(), out threads);
-                    
-                    if(threads > 0)
+
+                    if (threads > 0)
                     {
                         interactionComplete = true;
                     }
-                    else 
+                    else
                     {
-                       System.Console.WriteLine("Invalid Option, try again.");
+                        Console.WriteLine("Invalid Option, try again.");
                     }
                 }
-            }            
+                else
+                {
+                    interactionComplete = true;
+                }
+            }
 
-            while(!stopPressed)
+            while (!stopPressed)
             {
                 await _blockChainManager.ManageAsync(threads);
             }
-        
         }
     }
 }
