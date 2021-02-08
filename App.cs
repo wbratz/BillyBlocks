@@ -29,12 +29,10 @@ namespace bc
 
             while (!interactionComplete)
             {
-                //Console.WriteLine($"Choose Mining Option: ");
-                //Console.WriteLine($"1 - Multithreaded, 2 - Single Thread");
+                Console.WriteLine($"Choose Mining Option: ");
+                Console.WriteLine($"1 - Multithreaded, 2 - Single Thread");
 
-                //int.TryParse(Console.ReadLine(), out int miningOption);
-
-                var miningOption = 2;
+                int.TryParse(Console.ReadLine(), out int miningOption);
 
                 if (miningOption < 1 || miningOption > 2)
                 {
@@ -61,10 +59,21 @@ namespace bc
                 }
             }
 
-            while (!stopPressed)
+            if(threads > 1)
             {
-                await _blockChainManager.ManageAsync(threads);
+                while (!stopPressed)
+                {
+                    await _blockChainManager.ManageAsync(threads);
+                }
             }
+            else
+            {
+                while (!stopPressed)
+                {
+                    await _blockChainManager.Manage();
+                }
+            }
+            
         }
     }
 }

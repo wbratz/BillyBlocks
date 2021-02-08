@@ -1,3 +1,4 @@
+using System.Globalization;
 using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
@@ -18,6 +19,7 @@ namespace bc.Miners
         private readonly IGenerateNewBlocks _newBlockManager;
         private readonly string _comparison;
         private string hash;
+        private bool isFound;
 
         public BlockMiner(
             IHash hasher,
@@ -63,20 +65,75 @@ namespace bc.Miners
         {
             threads = threads > 0 ? threads : 1;
 
+            var taskList = new List<Task<string>>();
+
+            var nonceRangeDictionary = GetNonceRangeForThreads(threads);
+
             _logger.LogInformation($"Starting async mining on {threads} threads.");
 
-            var taskList = new List<Task<Block>>();
-
             for (int i = 0; i < threads; i++)
-            {
-                taskList.Add(Task.Run(() => MineBlock()));
+            {                
+                taskList.Add(Task.Run(() => DoWork(nonceRangeDictionary[i].startValue, nonceRangeDictionary[i].endValue)));
             }
 
-            var newBlockTask = await Task.WhenAny(taskList);
+            var workTask = await Task.WhenAny(taskList);
+            
+            var completedWork = await workTask;
 
             _logger.LogInformation($"Async mining complete.");
 
-            return await newBlockTask;
+            if(completedWork != null)
+            {
+                return await _newBlockManager.GenerateNewBlockAsync(completedWork);
+            }
+
+            return null;
+        }
+
+        private string DoWork(long nonceStart, long nonceEnd)
+        {
+            var asyncNonce = nonceStart;
+            var asyncHash = Guid.NewGuid().ToString();
+
+            while (hash.Substring(0, _difficulty + 1) != _comparison && asyncNonce <= nonceEnd )
+            {
+                if(isFound)
+                {
+                    _logger.LogInformation("Process halted, another thread found solution");
+                    return null;
+                }    
+
+                asyncNonce++;
+                asyncHash = _hasher.CalculateHash(hash + asyncNonce.ToString());
+            }
+
+            _logger.LogInformation("Solution Found");
+            return asyncHash;
+        }
+
+        private Dictionary<int, (long startValue, long endValue)> GetNonceRangeForThreads(int threads)
+        {
+            var result = new Dictionary<int, (long, long)>();
+            long placeHolder = 0;
+
+            var mod = (long.MaxValue % threads);
+            var quotant = (long.MaxValue - mod / threads);
+
+            for (int i = 0; i < threads; i++)
+            {
+                if(i == threads - 1)
+                {
+                    result.Add(i, (placeHolder + 1, placeHolder + quotant + mod));  
+                }
+                else 
+                {
+                    result.Add(i, (placeHolder + 1, placeHolder + quotant));
+                }
+
+                placeHolder += quotant;
+            }
+
+            return result;
         }
 
         private void GenerateNewHash()

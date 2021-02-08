@@ -62,7 +62,10 @@ namespace bc.BlockManagers
 
             var block = await _blockMiner.MineBlockAsync(threads);
 
-            _blockChain.Add(block);
+            if(block != null)
+            {
+                _blockChain.Add(block);
+            }
 
             BlockChain.Chain = _blockChain;
 
