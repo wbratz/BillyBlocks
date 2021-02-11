@@ -59,7 +59,7 @@ namespace bc
                 }
             }
 
-            if(threads > 1)
+            if (threads > 1)
             {
                 while (!stopPressed)
                 {
@@ -70,10 +70,9 @@ namespace bc
             {
                 while (!stopPressed)
                 {
-                    await _blockChainManager.Manage();
+                    _blockChainManager.Manage();
                 }
             }
-            
         }
     }
 }

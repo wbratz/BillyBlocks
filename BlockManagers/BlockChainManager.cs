@@ -8,6 +8,7 @@ using System.Linq;
 using System;
 using bc.HashingMethods;
 using bc.Retievers;
+using System.Threading;
 
 namespace bc.BlockManagers
 {
@@ -62,17 +63,17 @@ namespace bc.BlockManagers
 
             var block = await _blockMiner.MineBlockAsync(threads);
 
-            if(block != null)
+            if (block != null)
             {
                 _blockChain.Add(block);
+
+                BlockChain.Chain = _blockChain;
+
+                _logger.LogInformation("New block added");
+                _logger.LogInformation("Current BlockChain contents.");
+
+                DisplayBlockChainContents();
             }
-
-            BlockChain.Chain = _blockChain;
-
-            _logger.LogInformation("New block added");
-            _logger.LogInformation("Current BlockChain contents.");
-
-            DisplayBlockChainContents();
 
             return _blockChain;
         }

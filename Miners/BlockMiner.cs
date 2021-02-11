@@ -7,6 +7,7 @@ using bc.Models;
 using bc.HashingMethods;
 using Microsoft.Extensions.Logging;
 using bc.BlockManagers;
+using System.Threading;
 
 namespace bc.Miners
 {
@@ -31,6 +32,7 @@ namespace bc.Miners
             _hasher = hasher;
             _newBlockManager = newBlockManager;
             _logger = logger;
+            isFound = false;
 
             hash = Guid.NewGuid().ToString();
         }
@@ -63,6 +65,11 @@ namespace bc.Miners
 
         public async Task<Block> MineBlockAsync(int threads)
         {
+            if (hash.Substring(0, _difficulty + 1) == _comparison)
+            {
+                GenerateNewHash();
+            }
+
             threads = threads > 0 ? threads : 1;
 
             var taskList = new List<Task<string>>();
@@ -71,18 +78,17 @@ namespace bc.Miners
 
             _logger.LogInformation($"Starting async mining on {threads} threads.");
 
-            for (int i = 0; i < threads; i++)
-            {                
-                taskList.Add(Task.Run(() => DoWork(nonceRangeDictionary[i].startValue, nonceRangeDictionary[i].endValue)));
+            foreach (var nonceRange in nonceRangeDictionary)
+            {
             }
 
             var workTask = await Task.WhenAny(taskList);
-            
+
             var completedWork = await workTask;
 
             _logger.LogInformation($"Async mining complete.");
 
-            if(completedWork != null)
+            if (completedWork != null)
             {
                 return await _newBlockManager.GenerateNewBlockAsync(completedWork);
             }
@@ -94,20 +100,27 @@ namespace bc.Miners
         {
             var asyncNonce = nonceStart;
             var asyncHash = Guid.NewGuid().ToString();
+            isFound = false;
 
-            while (hash.Substring(0, _difficulty + 1) != _comparison && asyncNonce <= nonceEnd )
+            while (asyncHash.Substring(0, _difficulty + 1) != _comparison)
             {
-                if(isFound)
+                if (isFound)
                 {
                     _logger.LogInformation("Process halted, another thread found solution");
                     return null;
-                }    
+                }
+                if (asyncNonce > nonceEnd || asyncNonce < 0)
+                {
+                    return null;
+                }
 
                 asyncNonce++;
                 asyncHash = _hasher.CalculateHash(hash + asyncNonce.ToString());
             }
 
             _logger.LogInformation("Solution Found");
+            isFound = true;
+
             return asyncHash;
         }
 
@@ -117,15 +130,15 @@ namespace bc.Miners
             long placeHolder = 0;
 
             var mod = (long.MaxValue % threads);
-            var quotant = (long.MaxValue - mod / threads);
+            var quotant = (long.MaxValue - mod) / threads;
 
             for (int i = 0; i < threads; i++)
             {
-                if(i == threads - 1)
+                if (i == threads - 1)
                 {
-                    result.Add(i, (placeHolder + 1, placeHolder + quotant + mod));  
+                    result.Add(i, (placeHolder + 1, placeHolder + quotant + mod));
                 }
-                else 
+                else
                 {
                     result.Add(i, (placeHolder + 1, placeHolder + quotant));
                 }
