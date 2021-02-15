@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\bs\\BillyBlocks\\bc.csproj": {}
+    "C:\\bs\\BillyBlocks\\refactor\\BlockChain.csproj": {}
   },
   "projects": {
-    "C:\\bs\\BillyBlocks\\bc.csproj": {
+    "C:\\bs\\BillyBlocks\\refactor\\BlockChain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\bs\\BillyBlocks\\bc.csproj",
-        "projectName": "bc",
-        "projectPath": "C:\\bs\\BillyBlocks\\bc.csproj",
+        "projectUniqueName": "C:\\bs\\BillyBlocks\\refactor\\BlockChain.csproj",
+        "projectName": "BlockChain",
+        "projectPath": "C:\\bs\\BillyBlocks\\refactor\\BlockChain.csproj",
         "packagesPath": "C:\\Users\\bbratz\\.nuget\\packages\\",
-        "outputPath": "C:\\bs\\BillyBlocks\\obj\\",
+        "outputPath": "C:\\bs\\BillyBlocks\\refactor\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\bbratz\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -26,7 +26,7 @@
         },
         "frameworks": {
           "net5.0": {
-            "targetAlias": "net5.0",
+            "targetAlias": "NET5",
             "projectReferences": {}
           }
         },
@@ -38,37 +38,7 @@
       },
       "frameworks": {
         "net5.0": {
-          "targetAlias": "net5.0",
-          "dependencies": {
-            "Microsoft.Extensions.Configuration": {
-              "target": "Package",
-              "version": "[5.0.0, )"
-            },
-            "Microsoft.Extensions.Configuration.Binder": {
-              "target": "Package",
-              "version": "[5.0.0, )"
-            },
-            "Microsoft.Extensions.Configuration.Json": {
-              "target": "Package",
-              "version": "[5.0.0, )"
-            },
-            "Microsoft.Extensions.DependencyInjection": {
-              "target": "Package",
-              "version": "[5.0.1, )"
-            },
-            "Microsoft.Extensions.Hosting": {
-              "target": "Package",
-              "version": "[5.0.0, )"
-            },
-            "Microsoft.Extensions.Logging": {
-              "target": "Package",
-              "version": "[5.0.0, )"
-            },
-            "Microsoft.Extensions.Logging.Console": {
-              "target": "Package",
-              "version": "[5.0.0, )"
-            }
-          },
+          "targetAlias": "NET5",
           "imports": [
             "net461",
             "net462",

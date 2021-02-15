@@ -5,6 +5,10 @@ VisualStudioVersion = 16.0.30907.101
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "bc", "bc.csproj", "{A17184E9-DAC7-4276-B9AD-1DCE705BF205}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Refactor", "Refactor", "{C1E4DECD-30A1-4EC5-9B2D-616374CC2230}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlockChain", "refactor\BlockChain.csproj", "{938C2619-6CBC-4467-ACB7-97EA08C99356}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,9 +19,16 @@ Global
 		{A17184E9-DAC7-4276-B9AD-1DCE705BF205}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A17184E9-DAC7-4276-B9AD-1DCE705BF205}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A17184E9-DAC7-4276-B9AD-1DCE705BF205}.Release|Any CPU.Build.0 = Release|Any CPU
+		{938C2619-6CBC-4467-ACB7-97EA08C99356}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{938C2619-6CBC-4467-ACB7-97EA08C99356}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{938C2619-6CBC-4467-ACB7-97EA08C99356}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{938C2619-6CBC-4467-ACB7-97EA08C99356}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{938C2619-6CBC-4467-ACB7-97EA08C99356} = {C1E4DECD-30A1-4EC5-9B2D-616374CC2230}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {35EC657A-55D4-4339-A807-040F15DBE60D}
